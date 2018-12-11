@@ -11,9 +11,11 @@ private:
 	char *str;
 	size_t str_len;
 public:
-	String();
+	String() = delete;
+	String(const char *s = new char[1] {'\0'});
 	~String();
 	String(const String &);
+	
 	const char *getCharString(void) const;
 	String & operator=(const String &);
 
@@ -28,7 +30,7 @@ public:
 
 	String &append(const String &);
 	int 	compare(const String &) const;
-	size_t	length(void) const;
+	size_t	length() const;
 	void	resize(size_t new_size);
 	void	clear(void);
 	String &swap(const String &);
