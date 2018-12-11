@@ -17,6 +17,7 @@ public:
 	String(const String &);
 	
 	const char *getCharString(void) const;
+
 	String & operator=(const String &);
 
 	String &operator+(const String &);
