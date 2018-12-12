@@ -11,16 +11,16 @@ private:
 	char *str;
 	size_t str_len;
 public:
-	String() = delete;
-	String(const char *s = new char[1] {'\0'});
+	String();
+	String(const char *s);
 	~String();
 	String(const String &);
 	
 	const char *getCharString(void) const;
 
-	String & operator=(const String &);
+	String &operator=(const String &);
 
-	String &operator+(const String &);
+	String &operator+(const String &) const;
 	String &operator+=(const String &);
 	
 	String &operator==(const String &);
