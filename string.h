@@ -11,6 +11,7 @@ class String
 private:
 	char *str;
 	size_t str_len;
+	size_t capacity;
 public:
 	String();
 	String(const char *s);
@@ -33,7 +34,7 @@ public:
 	void	clear(void);
 	String&	swap(String &);
 
-	const char *substr(const String& ) const;  //should search for a specified substring into existing one and return position of the 1st character
+	const char *substr(const char * ) const;  //should search for a specified substring into existing one and return position of the 1st character
 	void	insert(const char *ins, size_t pos); //means inserting one character or another string into a specified position
 };
 

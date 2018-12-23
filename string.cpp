@@ -1,7 +1,7 @@
 #include "string.h"
 #include <iostream>
 
-String::String() : str(new char[1] {'\0'}), str_len(0) {}
+String::String() : str(new char[100] {'\0'}), str_len(0), capacity(100) {}
 
 String::~String()
 {
@@ -14,7 +14,8 @@ String::String(const char *init)
 	if (init == nullptr)
 		throw std::logic_error("invalid data for initialization");
 	str_len = strlen(init);
-	str = new char [str_len + 1];
+	capacity = str_len + 1;
+	str = new char [capacity];
 	std::copy(init, init+str_len, str);
 	str[str_len] = '\0';
 }
@@ -31,12 +32,14 @@ String & String::operator=(String const & rObj)
 {
 	if (this != &rObj)
 	{
-		if (rObj.length() != str_len) {
+		if (rObj.length() >= capacity) {
 			if (str_len > 0)
 				delete [] str;
 			str_len = rObj.length();
-			str = new char[str_len + 1];
+			capacity = str_len + 1;
+			str = new char[capacity];
 		}
+		this->clear();
 		const char *src = rObj.getCharString();
 		std::copy(src, src + str_len, str);
 		str[str_len] = '\0';	
@@ -54,11 +57,13 @@ void	String::resize(size_t new_size)
 	{
 		delete [] str;
 		str = new char[1] {'\0'};
+		str_len = 0;
+		capacity = 1;
 	}
-	else if (new_size != str_len)
+	else if (new_size > capacity)
 	{
-		str_len = new_size;
-		char *new_str = new char[str_len + 1];
+		capacity = new_size;
+		char *new_str = new char[capacity];
 		std::copy(str, str + str_len, new_str);
 		new_str[str_len] = '\0';
 		delete [] str;
@@ -70,10 +75,12 @@ void	String::resize(size_t new_size)
 String &String::operator+=(const String &ref) 
 {
 	size_t new_len = str_len + ref.length();
-	char *new_str = new char[new_len + 1];
+	capacity = new_len + 1;
+	char *new_str = new char[capacity];
 	std::copy(str, str + str_len, new_str);
 	const char *str_ref = ref.getCharString(); 
 	std::copy(str_ref, str_ref + ref.length(), new_str + str_len);
+	delete [] str;
 	this->str = new_str;
 	this->str_len = new_len;
 	return *this;
@@ -106,11 +113,9 @@ String	String::append(const String & obj)
 
 void	String::clear(void)
 {
-	//delete [] str;
-	//str = new char [1] {'\0'};
 	for (size_t s = 0; s < str_len; s++)
 		str[s] = '\0';
-	//str_len = 0;
+	str_len = 0;
 }
 
 std::ostream& operator<<(std::ostream& os, const String& obj)
@@ -121,9 +126,12 @@ std::ostream& operator<<(std::ostream& os, const String& obj)
 
 std::istream& operator>>(std::istream& is, String & obj)
 {
-	std::cout << "Type string. Not more than 1000 symbols is allowed.\n";
-	char *input = new char[1001];
-	is >> input;
+	size_t left = obj.capacity - obj.str_len - 1; 
+	std::cout << "Type string. Not more than " 
+			<< left
+			<< " symbols is allowed.\n";
+	//char *input = new char[left];
+	is >> obj.str;
 	
 	return is;
 }
@@ -132,13 +140,16 @@ String&	String::swap(String & obj)
 {
 	char *tmp = str;
 	size_t tmp_len = str_len;
+	size_t capacity_tmp = capacity;
+	capacity = obj.capacity;
 	str_len = obj.length();
 	str = obj.getCharString();
 	obj.str = tmp;
 	obj.str_len = tmp_len;
+	obj.capacity = capacity_tmp;
 }
 
-const char*	String::substr(const char *find)
+const char*	String::substr(const char *find) const
 {
 	for (size_t i = 0; str[i]; i++)
 	{
@@ -148,7 +159,9 @@ const char*	String::substr(const char *find)
 			{
 				
 			}
-
+		}
+	}
+}
 
 int main()
 {
@@ -163,6 +176,8 @@ int main()
 	
 	if ( s.compare(s3))
 		std::cout << " equal\n";
+	const char *str = "CITY";
+	std::cout << str + s << '\n';
 	
 //	std::cout << s4.getCharString() << std::endl;
 	
