@@ -9,9 +9,10 @@ class String
 {
 
 private:
-	char *str;
-	size_t str_len;
-	size_t capacity;
+	char	*str;
+	size_t	str_len;
+	size_t	capacity;
+
 public:
 	String();
 	String(const char *s);
@@ -43,6 +44,11 @@ public:
 	{
 		return !operator==(lhs, rhs);
 	}
-	inline String operator+(String, const String &);
+	
+	inline String operator+(String lhs, const String &rhs)
+	{
+		lhs += rhs;
+		return lhs;
+	}
 
 #endif
