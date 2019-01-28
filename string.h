@@ -11,7 +11,7 @@ class String
 private:
 	char	*str;
 	size_t	str_len;
-	size_t	capacity;
+	size_t	capacity_;
 
 public:
 	String();
@@ -19,7 +19,7 @@ public:
 	~String();
 	String(const String &);
 	
-	char *getCharString(void) const;
+	char	*getCharString(void) const;
 
 	String	&operator=(const String &);
 
@@ -31,6 +31,7 @@ public:
 	String	append(const String &);
 	int		compare(const String &) const;
 	size_t	length() const;
+	size_t	capacity() const;
 	void	resize(size_t new_size);
 	void	clear(void);
 	String&	swap(String &);
@@ -42,10 +43,10 @@ public:
 	inline bool operator==(const String &, const String &);
 	inline bool operator!=(const String& lhs, const String& rhs ) 
 	{
-		return !operator==(lhs, rhs);
+		return !(operator==(lhs, rhs));
 	}
 	
-	inline String operator+(String lhs, const String &rhs)
+	inline String &operator+(String & lhs, const String &rhs)
 	{
 		lhs += rhs;
 		return lhs;
