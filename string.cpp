@@ -54,8 +54,6 @@ size_t	String::capacity() const { return capacity_; }
 
 void	String::resize(size_t new_size)
 {
-	if (new_size < 0)
-		throw std::logic_error("Size cannot be negative");
 	if (new_size < str_len)
 		throw std::logic_error("New_size can't be less than size of orig string");
 	if (new_size == 0)
@@ -88,15 +86,6 @@ String &String::operator+=(const String &ref)
 	this->str = new_str;
 	this->str_len = new_len;
 	return *this;
-}
-
-bool operator==(const String & lhs, const String & rhs)
-{
-	const char *str_l = lhs.getCharString();
-	const char *str_r = rhs.getCharString();
-	if (strlen(str_l) != strlen(str_r))
-		return 0;
-	return std::equal(str_l, str_l + lhs.length(), str_r);
 }
 
 int String::compare(const String & obj) const
@@ -133,7 +122,7 @@ std::istream& operator>>(std::istream& is, String & obj)
 	return is;
 }
 
-String&	String::swap(String & obj)
+void	String::swap(String & obj)
 {
 	char *tmp = str;
 	size_t tmp_len = str_len;
@@ -143,7 +132,7 @@ String&	String::swap(String & obj)
 	str = obj.getCharString();
 	obj.str = tmp;
 	obj.str_len = tmp_len;
-	obj.capacity_ = capacity__tmp;
+	obj.capacity_ = capacity__tmp; 
 }
 
 const char*	String::substr(const char *find) const

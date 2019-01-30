@@ -21,8 +21,8 @@ int main()
 
 	String s_a1 = ("Peace, Love, ");
 	String s_a2 = ("Unity, Respect.");
-	cout << "Append string \"Peace, Love, \" && \"Unity, Respect.\"\
-	(using operator)\n"; 
+	cout << "Append string \"Peace, Love, \" && \"Unity, Respect.\"\n";
+	cout << "Append function uses operator+\n";
 	s_a1.append(s_a2);
 	cout << s_a1 << "\n\n";
 
@@ -35,6 +35,8 @@ int main()
 
 
 	cout << "Compare 2 strings \"Kyiv\" && \"Kyiv\" (using operator ==)\n";
+
+	
 	cout << s_c1.compare(s_c3) << "\n";
 
 	cout << "Compare 2 strings \"Kyiv\" && \"Kiev\" (using operator !=)\n";
@@ -69,8 +71,8 @@ int main()
 	cout << s_sub.substr("World") << "\n\n";
 
 
-	cout << "Inserting string \"almost \" to the previous string\n";
-	s_sub.insert("almost", 8);
+	cout << "Inserting string \"_Insertion_\" to the previous string\n";
+	s_sub.insert("Insertion", 8);
 	cout << s_sub << "\n\n";
 
 

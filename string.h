@@ -34,13 +34,17 @@ public:
 	size_t	capacity() const;
 	void	resize(size_t new_size);
 	void	clear(void);
-	String&	swap(String &);
+	void	swap(String &);
 
 	const char *substr(const char * ) const;  //should search for a specified substring into existing one and return position of the 1st character
 	void	insert(const char *ins, size_t pos); //means inserting one character or another string into a specified position
 };
 
-	inline bool operator==(const String &, const String &);
+	inline bool operator==(const String &lhs, const String &rhs)
+	{
+		return std::equal(lhs.getCharString(), lhs.getCharString()\
+		 + lhs.length(), rhs.getCharString());
+	}
 	inline bool operator!=(const String& lhs, const String& rhs ) 
 	{
 		return !(operator==(lhs, rhs));
